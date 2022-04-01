@@ -6,7 +6,7 @@
  2. TODO
  3. TODO
 
-Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pedro Jordão, Maria Augusta Borba and Gabriel Cavalcanti. All of the team members are Computer Science Bachelors currently enrolled at [CIn - UFPE](https://portal.cin.ufpe.br/).
+Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pedro Jordão, Maria Augusta Borba and Gabriel Cavalcanti. All of the team members are Computer Science Bachelors currently enrolled at [CIn - UFPE](https://portal.cin.ufpe.br/) and their profile link will be at the end of the documentation.
 
 ## About the game
 This game was created as a project to "Game development" class. Our great inspiration is chess and decided to add some new elements to make it more interesting.
@@ -39,4 +39,11 @@ Step-by-step:
  7. When added all the changes to the commit do `git commit -m description_here` where **description_here** is a simples description of the changes.
  8. If sure about commit do `git push origin feature_name`.
  9. After pushing the change to github, open a new **pull request**.
+
+### Contributors
+Victor Gaudiot - [gaudiot](https://github.com/Gaudiot)
+Maria Augusta Borba - [mariaaugustamb](https://github.com/mariaaugustamb)
+João Pedro Jordão - [joaopedro-jordao](https://github.com/joaopedro-jordao)
+Pedro Arruda - [pedroharruda](https://github.com/pedrohrarruda)
+Gabriel Cavalcanti - [gbc8](https://github.com/gbc8)
 
