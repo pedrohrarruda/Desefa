@@ -39,11 +39,12 @@ Step-by-step:
  7. When added all the changes to the commit do `git commit -m description_here` where **description_here** is a simples description of the changes.
  8. If sure about commit do `git push origin feature_name`.
  9. After pushing the change to github, open a new **pull request**.
+<hr/>
 
 ### Contributors
-Victor Gaudiot - [gaudiot](https://github.com/Gaudiot)
-Maria Augusta Borba - [mariaaugustamb](https://github.com/mariaaugustamb)
-João Pedro Jordão - [joaopedro-jordao](https://github.com/joaopedro-jordao)
-Pedro Arruda - [pedroharruda](https://github.com/pedrohrarruda)
-Gabriel Cavalcanti - [gbc8](https://github.com/gbc8)
+Victor Gaudiot - [gaudiot](https://github.com/Gaudiot) <br/>
+Maria Augusta Borba - [mariaaugustamb](https://github.com/mariaaugustamb) <br/>
+João Pedro Jordão - [joaopedro-jordao](https://github.com/joaopedro-jordao) <br/>
+Pedro Arruda - [pedroharruda](https://github.com/pedrohrarruda) <br/>
+Gabriel Cavalcanti - [gbc8](https://github.com/gbc8) <br/>
 
