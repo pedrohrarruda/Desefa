@@ -1,3 +1,4 @@
+
 # Desefa
 
 ### Quick Search
@@ -30,15 +31,15 @@ Mostly like normal chess
 # Colaboration
 Step-by-step:
  1. Fork the repository
- 2. At your terminal type `git checkout main` and then `git pull` to update your local branch.
- 3. Check which week have passed since the beginning of the project. For that you can use [this website](https://planetcalc.com/7741/?date1=2022-03-19%2000%3A00%3A00) and change the **second date** to the today date.
- 4. Then you can do `git checkout week_X` where **X** is the amount of weeks that have passed. If the branch doesn't exists you can do `git checkout -b week_X` and then `git push origin week_X` to add the branch to github. (*The week change every saturday*)
- 5. Now we are at the week branch, we need to go to our feature branch. Do `git checkout feature_name` where **feature_name** is the feature you'll be working on (e.g. Loja, Fog, Movement). If the branch doesn't exists you can do `git checkout -b feature_name` and then `git push origin feature_name` to add the branch to github.
- 6. Make the changes you wish 🕹️💻
- 7. When done do `git status` to see changes and `git add file_name` to add the file to the commit.
- 8. When added all the changes to the commit do `git commit -m description_here` where **description_here** is a simples description of the changes.
- 9. If sure about commit do `git push origin feature_name`.
- 10. After pushing the change to github, open a new **pull request**.
+ 2. At your terminal `checkout` to the *main* branch and `pull` any changes.
+ 3. Check how many weeks have passed since the beginning of the project. You can use [this website](https://planetcalc.com/7741/?date1=2022-03-19%2000%3A00%3A00) and change the **second date** to the today date. (*The week change every saturday*)
+ 4. `Checkout` to the *week_X* branch where **X** is  the amount of weeks that have passed (create branch if it doesn't exists and `push` it to github).
+ 5. Now from the *week_X* branch `checkout` to the *feature_name* branch. (e.g. timer, fog, movement_pawn) (create branch if it doesn't exists and `push` it to github)
+ 6. Make the changes you wish 🕹️💻.
+ 7. When done `commit` the changes to your *feature_name* branch and `merge` it with *week_X* branch. (p.s. remember to commit with a descriptive message)
+ 8. When done making changes on *week_X* branch, `merge` it with the *main* branch.
+ 9. `Pull` to sync your repo with the original, then **solve the conflicts** if any. (if you don't know how to sync, click [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork))
+ 10. Open a `pull request` to merge your fork with the [original repo](https://github.com/Gaudiot/Desefa).
 <hr/>
 
 ### Contributors
