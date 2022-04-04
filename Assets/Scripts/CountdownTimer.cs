@@ -1,25 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
-    private string timeToString(float time){
-        return TimeSpan.FromSeconds(time).ToString(@"mm\:ss");
-    }
-    public float currentTime;
-    public float startingTime;
+    private float currentTime;
+    private float startingTime;
+    private bool isRunning;
+    
+    public TextMeshProUGUI timer;
 
-    public TMPro.TextMeshProUGUI timer;
+    public void StartTimer(){
+        isRunning = true;
+    }
+
+    public void StopTimer(){
+        isRunning = false;
+    }
+
+    private void updateTimer(){
+        timer.text = TimeSpan.FromSeconds(currentTime).ToString(@"h\:mm\:ss");
+    }
 
     void Start() {
-        currentTime = startingTime;
+        currentTime = startingTime = 60*60;
+        isRunning = false;
+        timer = gameObject.GetComponent<TextMeshProUGUI>();
+        updateTimer();
     }
 
     void Update(){
-        if(GameManager.Instance.turnPlayer == GameManager.TurnPlayer.black) return;
+        if(!isRunning) return;
         currentTime -= 1*Time.deltaTime;
-        timer.text = timeToString(currentTime);
+        updateTimer();
     }
 }
