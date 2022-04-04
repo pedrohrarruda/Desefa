@@ -14,7 +14,7 @@ Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pe
 ## About the game
 This game was created as a project to "Game development" class. Our great inspiration is chess and decided to add some new elements to make it more interesting.
 ## How to play
-Mostly like normal chess, pieces will move in the same way, you can check for [pieces movements](#chess-pieces) on the next section. But, be careful, you may find some obstacles on the way, and that will interrupt your movement, just like attacking a oponents piece. That interrupts your turn and its time for the other player do it's play. 
+Mostly like normal chess, pieces will move in the same way, you can check for [pieces movements](#chess-pieces) on the next section. But, be careful, you may find some obstacles on the way, and that will interrupt your movement. If you decided that next to the obtacle is the best strategy or if you rralize an attack to the opponent, then it's time for the other player to play it's turn. 
 ## Chess pieces
 
  - Pawn♙
