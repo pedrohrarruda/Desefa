@@ -18,17 +18,23 @@ Mostly like normal chess, pieces will move in the same way, you can check for [p
 ## Chess pieces
 
  - Pawn♙
-	 -  Each player starts the game with 8 pawns, filling the front line of pieces. They always move foward on vertical direction, one square at a time, except the first move of each, when you can decide if you go one or two squares ahead. Pawns attack are also realized moving foward, but in diagonal direction.
+	 - 8 pawns
+	 - The pawns fill the front line of pieces. They always move forward on vertical direction, one square at a time, except the first move of each, when you can decide if you go one or two squares ahead. Pawns attack are also realized moving forward, but in diagonal direction.
  - Rook♖
-	 - Rooks move in vertical or horizontal ways, but not diagonals. You can move how many squares you want, forward ou backwards. Attacks with this piece are realized in the same way as the movement. Each player has 2 rooks in the beggining of the game.
+	 - 2 rooks
+	 - The rooks move in vertical or horizontal ways, but not diagonals. You can move how many squares you want, forward or backwards. Rooks attacks in the same way as the movement. 
  - Knight♘
-	 - These piece movements are pretty specific, it moves 2 squares in one way and 1 square the other (ex: 2 squares diagonally and 1 vertically, or the opposite, foward or backwards).
+	 - 2 knights
+	 - Knights movements are pretty specific, it moves 2 squares in one way and 1 square the other (ex: 2 squares horizontally and 1 vertically, or the opposite, forward or backwards). Knights attacks occur when there is a oponent piece standing on the **last square** occupied by the knight.
  - Bishop♗
-	 - Bishops moves foward or backwards in, and only in, diagonal way. Attacks are also realized in this direction.
+	 - 2 bishops
+	 - Bishops moves forward or backwards in, and only in, diagonal way. Bishop attacks are also realized in this direction.
  - Queen♕
-	 - The queen moves in anyway (vertical, horizontal or diagonal) and any direction (foward or backwards). It moves as many squares as you want, but be aware of obstacles and attacks, wich can be realized in all those moving ways. 
+	 - 1 queen
+	 - The queen moves in anyway (vertical, horizontal or diagonal) and any direction (forward or backwards). It moves as many squares as you want, but be aware of obstacles. Queen can be realized in all those moving ways. 
  - King♔
-	 - 
+	 - 1 king
+	 - The king can move in anyway (vertical, horizontal or diagonal) and any direction (forward or backwards), but, differently than the queen, it can only move one square at a time. King attacks can happen in any case of valid movement.
 
 # Colaboration
 Step-by-step:
