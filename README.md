@@ -14,19 +14,19 @@ Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pe
 ## About the game
 This game was created as a project to "Game development" class. Our great inspiration is chess and decided to add some new elements to make it more interesting.
 ## How to play
-Mostly like normal chess.
+Mostly like normal chess, pieces will move in the same way, you can check for [pieces movements](#chess-pieces) on the next section. But, be careful, you may find some obstacles on the way, and that will interrupt your movement, just like attacking a oponents piece. That interrupts your turn and its time for the other player do it's play. 
 ## Chess pieces
 
  - Pawn♙
-	 -  
+	 -  Each player starts the game with 8 pawns, filling the front line of pieces. They always move foward on vertical direction, one square at a time, except the first move of each, when you can decide if you go one or two squares ahead. Pawns attack are also realized moving foward, but in diagonal direction.
  - Rook♖
-	 - 
+	 - Rooks move in vertical or horizontal ways, but not diagonals. You can move how many squares you want, forward ou backwards. Attacks with this piece are realized in the same way as the movement. Each player has 2 rooks in the beggining of the game.
  - Knight♘
-	 - 
+	 - These piece movements are pretty specific, it moves 2 squares in one way and 1 square the other (ex: 2 squares diagonally and 1 vertically, or the opposite, foward or backwards).
  - Bishop♗
-	 - 
+	 - Bishops moves foward or backwards in, and only in, diagonal way. Attacks are also realized in this direction.
  - Queen♕
-	 - 
+	 - The queen moves in anyway (vertical, horizontal or diagonal) and any direction (foward or backwards). It moves as many squares as you want, but be aware of obstacles and attacks, wich can be realized in all those moving ways. 
  - King♔
 	 - 
 
