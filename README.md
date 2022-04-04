@@ -3,16 +3,18 @@
 
 ### Quick Search
 
- 1. TODO
- 2. TODO
- 3. TODO
+ 1. [About the Game](#about-the-game)
+ 2. [How To Play](#how-to-play)
+ 3. [Chess Pieces](#chess-pieces)
+ 4. [Colaboration](#colaboration)
+ 5. [Contributors](#contributors)
 
 Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pedro Jordão, Maria Augusta Borba and Gabriel Cavalcanti. All of the team members are Computer Science Bachelors currently enrolled at [CIn - UFPE](https://portal.cin.ufpe.br/) and their profile link will be at the end of the documentation.
 
 ## About the game
 This game was created as a project to "Game development" class. Our great inspiration is chess and decided to add some new elements to make it more interesting.
 ## How to play
-Mostly like normal chess
+Mostly like normal chess.
 ## Chess pieces
 
  - Pawn♙
