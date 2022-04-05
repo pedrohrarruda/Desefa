@@ -3,30 +3,38 @@
 
 ### Quick Search
 
- 1. TODO
- 2. TODO
- 3. TODO
+ 1. [About the Game](#about-the-game)
+ 2. [How To Play](#how-to-play)
+ 3. [Chess Pieces](#chess-pieces)
+ 4. [Colaboration](#colaboration)
+ 5. [Contributors](#contributors)
 
 Desefa is a game created and developed by Victor Gaudiot, Pedro Arruda, João Pedro Jordão, Maria Augusta Borba and Gabriel Cavalcanti. All of the team members are Computer Science Bachelors currently enrolled at [CIn - UFPE](https://portal.cin.ufpe.br/) and their profile link will be at the end of the documentation.
 
 ## About the game
 This game was created as a project to "Game development" class. Our great inspiration is chess and decided to add some new elements to make it more interesting.
 ## How to play
-Mostly like normal chess
+Mostly like normal chess, pieces will move in the same way, you can check for [pieces movements](#chess-pieces) on the next section. But, be careful, you may find some obstacles on the way, and that will interrupt your movement.
 ## Chess pieces
 
  - Pawn♙
-	 -  
+	 - 8 pawns
+	 - The pawns fill the front line of pieces. They always move forward on vertical direction, one square at a time, except the first move of each, when you can decide if you go one or two squares ahead. Pawns attack are also realized moving forward, but in diagonal direction.
  - Rook♖
-	 - 
+	 - 2 rooks
+	 - The rooks move in vertical or horizontal ways, but not diagonals. You can move how many squares you want, forward or backwards. Rooks attacks in the same way as the movement. 
  - Knight♘
-	 - 
+	 - 2 knights
+	 - Knights movements are pretty specific, it moves 2 squares in one way and 1 square the other (ex: 2 squares horizontally and 1 vertically, or the opposite, forward or backwards). Knights attacks occur when there is a oponent piece standing on the **last square** occupied by the knight.
  - Bishop♗
-	 - 
+	 - 2 bishops
+	 - Bishops moves forward or backwards in, and only in, diagonal way. Bishop attacks are also realized in this direction.
  - Queen♕
-	 - 
+	 - 1 queen
+	 - The queen moves in anyway (vertical, horizontal or diagonal) and any direction (forward or backwards). It moves as many squares as you want, but be aware of obstacles. Queen attacks can be realized in all those moving ways. 
  - King♔
-	 - 
+	 - 1 king
+	 - The king can move in anyway (vertical, horizontal or diagonal) and any direction (forward or backwards), but, differently than the queen, it can only move one square at a time. King attacks can happen in any case of valid movement.
 
 # Colaboration
 Step-by-step:
