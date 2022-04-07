@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    private int[] position;
+    private Vector2Int position;
     private int terrain;
     private GameObject piece;
 
 
-    public Tile(int x,int y){
-        this.position = new int [2] {x,y};
+    public Tile(Vector2Int position){
+        this.position = position;
         this.terrain = 0;
     }
 
-    public int[] getPosition(){
+    public Vector2Int getPosition(){
         return this.position;
     }
 
