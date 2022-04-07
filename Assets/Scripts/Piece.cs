@@ -15,17 +15,18 @@ public abstract class Piece : MonoBehaviour{
         for(int i = 0 ; i < movement.Count ; i++){
             Vector2Int pos = position;
 
-            while(true){
+            bool checkNextSquare = true;
+            while(checkNextSquare){
                 pos = pos + movement[i];
-
-                if(board.PieceCanOccupy(position) == false) break;
                 
-                Piece piece = board.GetPiece(pos);
-
-                if(piece == null || piece.team != this.team) moves.Add(pos);
-                if(piece != null) break;
-
-                if(moveOnce) break;
+                checkNextSquare = board.PieceCanOccupy(pos);
+                if(checkNextSquare){
+                    Piece piece = board.GetPiece(pos);
+                    if(piece == null || piece.team != this.team) moves.Add(pos);
+                    if(piece != null) checkNextSquare = false;
+                }
+                
+                if(moveOnce) checkNextSquare = false;
             }
         }
 
