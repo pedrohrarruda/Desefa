@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     
 
-    public void SwitchPlayer(){
+    public void SwitchTurn(){
         turnPlayer = (turnPlayer == TurnPlayer.white) ? TurnPlayer.black : TurnPlayer.white;
 
         if(turnPlayer == TurnPlayer.white){
