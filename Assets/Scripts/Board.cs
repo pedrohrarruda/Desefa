@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     {
         for(int x = 0; x<40; x++){
             for(int y = 0; y<20; y++){
-                Grid[x,y] = new Tile(x,y);
+                Grid[x,y] = new Tile(new Vector2Int(x,y));
             }
         }    
     }
@@ -28,9 +28,9 @@ public class Board : MonoBehaviour
         
     }
 
-    public bool validPos(int x,int y)
+    public bool validPos(Vector2Int position)
     {
-        if ((x<0 || x>40) || (y<0 || y>20)){
+        if ((position.x<0 || position.x>40) || (position.y<0 || position.y>20)){
             return false;
         }
         else{
