@@ -1,0 +1,51 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "untitled.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "#Tile-set - Toen's Medieval Strategy (16x16) - v.1.0": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 296,
+                "y": 95
+            }
+        },
+        "untitled.tmx#MV Icons Tabletop - ALL": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx#Tile-set - Toen's Medieval Strategy (16x16) - v.1.0": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/pedro/OneDrive/Documentos",
+    "last.imagePath": "C:/Users/pedro/OneDrive/Área de Trabalho",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 40,
+    "openFiles": [
+        "untitled.tmx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "untitled.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
