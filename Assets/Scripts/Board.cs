@@ -52,14 +52,14 @@ public class jsonObject{
 
 
 public class Board : MonoBehaviour
-{
-    public jsonObject json = JsonUtility.FromJson(jsonMapa.txt);
+{   public TextAsset jsonMapa;
+    public jsonObject json = JsonUtility.FromJson<jsonObject>(jsonMapa.text);
     public GameObject place_holder;
     public GameObject tile;
     public Tile[,] Grid = new Tile [40,20];
     public int[,] terrain = new int [40,20];
     
-    async void Start()
+    void Start()
     {
         for(int x = 0; x<40; x++){
             for(int y = 0; y<20; y++){
@@ -87,18 +87,18 @@ public class Board : MonoBehaviour
     }
 
     public bool isObstacle(Vector2Int vec){
-        if (terrain[vec.x,vec.y] =! 0 || terrain[vec.x,vec.y] =! 453 ||terrain[vec.x,vec.y] =! 455){
+        if (terrain[vec.x,vec.y] != 0 || terrain[vec.x,vec.y] != 453 || terrain[vec.x,vec.y] != 455){
             return true;
         }
         return false;
     }
 
     public int[,] matrixaux(int[] layerInts){
-        int[,] tem = new int[40, 20];
+        int[,] temp = new int[40, 20];
         for (int a = 0; a < layerInts.Length; a++) {
-            result[a % 40, a / 40] = arr[a];
+            temp[a % 40, a / 40] = layerInts[a];
         }
-        return result;
+        return temp;
     }
 }
 
