@@ -6,7 +6,7 @@ public class Tile : MonoBehaviour
 {
     private Vector2Int position;
     private int terrain;
-    private GameObject piece;
+    private Piece piece;
 
 
     public Tile(Vector2Int position){
@@ -14,19 +14,19 @@ public class Tile : MonoBehaviour
         this.terrain = 0;
     }
 
-    public Vector2Int getPosition(){
+    public Vector2Int GetPosition(){
         return this.position;
     }
 
-    public GameObject getPiece(){
+    public Piece GetPiece(){
         return this.piece;
     }
 
-    public void setPiece(GameObject newU){
-        this.piece = newU;
+    public void GetPiece(Piece newPiece){
+        this.piece = newPiece;
     }
 
-    public void clearPiece(){
+    public void ClearPiece(){
         this.piece = null;
     }
 

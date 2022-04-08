@@ -53,21 +53,27 @@ public class jsonObject{
 
 public class Board : MonoBehaviour
 {   public TextAsset jsonMapa;
-    public jsonObject json = JsonUtility.FromJson<jsonObject>(jsonMapa.text);
-    public GameObject place_holder;
-    public GameObject tile;
-    public Tile[,] Grid = new Tile [40,20];
-    public int[,] terrain = new int [40,20];
+    public int[,] terrain;
+
+    private Tile[,] Grid;
+    private int height;
+    private int width;
     
     void Start()
     {
-        for(int x = 0; x<40; x++){
-            for(int y = 0; y<20; y++){
+        jsonObject json = JsonUtility.FromJson<jsonObject>(jsonMapa.text);
+        this.height = json.height;
+        this.width = json.width;
+        this.Grid = new Tile[this.width,this.height]
+
+        for(int x = 0; x<this.width; x++){
+            for(int y = 0; y<this.height; y++){
                 Grid[x,y] = new Tile(new Vector2Int(x,y));
             }
         }
 
-        terrain = matrixaux(this.json.layers[1].data);    
+        this.terrain = new int[this.width, this.height];
+        terrain = Matrixaux(json.layers[1].data);    
     }
 
     
@@ -76,9 +82,24 @@ public class Board : MonoBehaviour
         
     }
 
-    public bool validPos(Vector2Int position)
+
+    public Piece GetPiece(Vector2Int position)
     {
-        if ((position.x<0 || position.x>40) || (position.y<0 || position.y>20)){
+        return this.Grid[position.x, position.y].GetPiece();
+    }
+
+    public bool PieceCanOccupy(Vector2Int position)
+    {
+        if(ValidPos(position) == true && IsObstacle(position) == false)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool ValidPos(Vector2Int position)
+    {
+        if ((position.x<0 || position.x>=this.width) || (position.y<0 || position.y>=this.height)){
             return false;
         }
         else{
@@ -86,17 +107,17 @@ public class Board : MonoBehaviour
         }
     }
 
-    public bool isObstacle(Vector2Int vec){
+    public bool IsObstacle(Vector2Int vec){
         if (terrain[vec.x,vec.y] != 0 || terrain[vec.x,vec.y] != 453 || terrain[vec.x,vec.y] != 455){
             return true;
         }
         return false;
     }
 
-    public int[,] matrixaux(int[] layerInts){
-        int[,] temp = new int[40, 20];
+    private int[,] Matrixaux(int[] layerInts){
+        int[,] temp = new int[this.width, this.height];
         for (int a = 0; a < layerInts.Length; a++) {
-            temp[a % 40, a / 40] = layerInts[a];
+            temp[a % this.width, a / this.height] = layerInts[a];
         }
         return temp;
     }
