@@ -271,8 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa33c5144ae11c4ebbb39167c378487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 0
-  startingTime: 3600
   timer: {fileID: 0}
 --- !u!1 &506190452
 GameObject:
@@ -524,7 +522,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1535188547}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SwitchPlayer
+        m_MethodName: SwitchTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -623,8 +621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa33c5144ae11c4ebbb39167c378487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 0
-  startingTime: 70
   timer: {fileID: 0}
 --- !u!114 &597775385
 MonoBehaviour:
@@ -887,7 +883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b595a8321c83dc4fa4df159fbe2f208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnPlayer: 0
   timerWhite: {fileID: 293221970}
   timerBlack: {fileID: 597775384}
 --- !u!4 &1535188548

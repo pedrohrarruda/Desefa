@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -22,7 +20,7 @@ public class Tile : MonoBehaviour
         return this.piece;
     }
 
-    public void GetPiece(Piece newPiece){
+    public void SetPiece(Piece newPiece){
         this.piece = newPiece;
     }
 
