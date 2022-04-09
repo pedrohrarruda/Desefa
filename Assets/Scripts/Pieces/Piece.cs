@@ -39,6 +39,10 @@ public abstract class Piece : MonoBehaviour{
         this.transform.position = new Vector3(position.x, position.y);
     }
 
+    public Vector2Int GetPosition(){
+        return this.position;
+    }
+
     public GameManager.TurnPlayer GetTeam(){
         return this.team;
     }
