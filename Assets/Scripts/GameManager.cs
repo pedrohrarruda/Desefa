@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private enum TurnPlayer {white, black};
+    public enum TurnPlayer {white, black};
     private TurnPlayer turnPlayer;
 
     public CountdownTimer timerWhite, timerBlack;

@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public abstract class Piece : MonoBehaviour{
-    private bool moveOnce = false;
-    private bool firstMove = true;
+    protected bool moveOnce = false;
+    protected bool firstMove = true;
 
-    private List<Vector2Int> movement = new List<Vector2Int>();
+    protected List<Vector2Int> movement = new List<Vector2Int>();
     private Vector2Int position = new Vector2Int();
-    private int team; //white(+1), black(-1)
+    public GameManager.TurnPlayer team;
 
     public virtual List<Vector2Int> GetAvailableMoves(ref Board board){
         List<Vector2Int> moves = new List<Vector2Int>();
@@ -22,7 +22,7 @@ public abstract class Piece : MonoBehaviour{
                 checkNextSquare = board.PieceCanOccupy(pos);
                 if(checkNextSquare){
                     Piece piece = board.GetPiece(pos);
-                    if(piece == null || piece.team != this.team) moves.Add(pos);
+                    if(piece == null || piece.GetTeam() != this.GetTeam()) moves.Add(pos);
                     if(piece != null) checkNextSquare = false;
                 }
                 
@@ -37,5 +37,9 @@ public abstract class Piece : MonoBehaviour{
         firstMove = false;
         position = new_position;
         this.transform.position = new Vector3(position.x, position.y);
+    }
+
+    public GameManager.TurnPlayer GetTeam(){
+        return this.team;
     }
 }
