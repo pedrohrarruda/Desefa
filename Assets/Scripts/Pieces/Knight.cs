@@ -16,5 +16,7 @@ public class Knight : Piece
         this.movement.Add(2*Vector2Int.down + Vector2Int.left);
 
         this.moveOnce = true;
+
+        this.pieceType = PieceType.knight;
     }
 }

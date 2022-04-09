@@ -10,5 +10,7 @@ public class Rook : Piece
         this.movement.Add(Vector2Int.left);
         this.movement.Add(Vector2Int.down);
         this.movement.Add(Vector2Int.right);
+
+        this.pieceType = PieceType.rook;
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Pawn : Piece
 {
+    public void Start(){
+        this.pieceType = PieceType.pawn;
+    }
+    
     public override List<Vector2Int> GetAvailableMoves(ref Board board)
     {
         List<Vector2Int> moves = new List<Vector2Int>();

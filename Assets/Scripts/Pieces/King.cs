@@ -16,5 +16,6 @@ public class King : Piece
         this.movement.Add(Vector2Int.left); //left
 
         this.moveOnce = true;
+        this.pieceType = PieceType.king;
     }
 }

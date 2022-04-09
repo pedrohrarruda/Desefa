@@ -10,5 +10,7 @@ public class Bishop : Piece
         this.movement.Add(Vector2Int.right + Vector2Int.up);
         this.movement.Add(Vector2Int.right + Vector2Int.down);
         this.movement.Add(Vector2Int.left + Vector2Int.down);
+
+        this.pieceType = PieceType.bishop;
     }
 }

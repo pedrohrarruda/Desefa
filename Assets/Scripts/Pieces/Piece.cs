@@ -9,6 +9,9 @@ public abstract class Piece : MonoBehaviour{
     private Vector2Int position = new Vector2Int();
     public GameManager.TurnPlayer team;
 
+    protected enum PieceType {rook, bishop, king, queen, pawn, knight};
+    protected PieceType pieceType;
+
     public virtual List<Vector2Int> GetAvailableMoves(ref Board board){
         List<Vector2Int> moves = new List<Vector2Int>();
 

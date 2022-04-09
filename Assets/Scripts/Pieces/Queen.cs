@@ -14,5 +14,7 @@ public class Queen : Piece
         this.movement.Add(Vector2Int.down); //down
         this.movement.Add(Vector2Int.down + Vector2Int.left); //down left
         this.movement.Add(Vector2Int.left); //left
+
+        this.pieceType = PieceType.queen;
     }
 }
