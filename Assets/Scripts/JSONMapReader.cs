@@ -64,8 +64,21 @@ public class JSONMapReader : MonoBehaviour
 
     public static int[,] GetMapMatrix(TextAsset jsonMapa){
         jsonObject json = JsonUtility.FromJson<jsonObject>(jsonMapa.text);
-        //TODO
-        int[,] todo = new int[2,2];
-        return todo;
+        int height = json.height;
+        int width = json.width;
+
+        int[] jsonMap = layers[1].data;
+        int sz = jsonMap.Length;
+
+        int[,] mapMatrix = new int[width+1,height+1];
+
+        for(int i = 0 ; i < sz ; i++){
+            int row = height - (i/width);
+            int col = (i%width) + 1;
+
+            mapMatrix[col, row] = jsonMap[i];
+        }
+
+        return mapMatrix;
     }
 }
