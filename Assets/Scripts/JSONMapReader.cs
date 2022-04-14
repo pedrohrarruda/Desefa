@@ -67,7 +67,7 @@ public class JSONMapReader : MonoBehaviour
         int height = json.height;
         int width = json.width;
 
-        int[] jsonMap = layers[1].data;
+        int[] jsonMap = json.layers[1].data;
         int sz = jsonMap.Length;
 
         int[,] mapMatrix = new int[width+1,height+1];
