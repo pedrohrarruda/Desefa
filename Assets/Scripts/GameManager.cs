@@ -18,9 +18,8 @@ public class GameManager : MonoBehaviour
     private TurnPlayer turnPlayer;
 
     public void TurnPlayerWins(){
-        //TODO
         Debug.Log(turnPlayer + " wins the game.");
-        SceneManager.LoadScene("WinnerScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("WinnerScene");
     }
 
     public void TurnPlayerLose(){
