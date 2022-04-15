@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,17 +10,17 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         }else{
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
     public enum TurnPlayer {white, black};
     private TurnPlayer turnPlayer;
 
-    public CountdownTimer timerWhite, timerBlack;
-
     public void TurnPlayerWins(){
         //TODO
         Debug.Log(turnPlayer + " wins the game.");
+        SceneManager.LoadScene("WinnerScene", LoadSceneMode.Single);
     }
 
     public void TurnPlayerLose(){
@@ -27,15 +28,12 @@ public class GameManager : MonoBehaviour
         TurnPlayerWins();
     }
 
-    public void SwitchTurn(){
-        turnPlayer = (turnPlayer == TurnPlayer.white) ? TurnPlayer.black : TurnPlayer.white;
+    public TurnPlayer GetTurnPlayer(){
+        return turnPlayer;
+    }
 
-        if(turnPlayer == TurnPlayer.white){
-            timerWhite.StartTimer();
-            timerBlack.StopTimer();
-        }else{
-            timerWhite.StopTimer();
-            timerBlack.StartTimer();
-        }
+    public void SwitchTurn(){
+        if(turnPlayer == TurnPlayer.black) turnPlayer = TurnPlayer.white;
+        else turnPlayer = TurnPlayer.black;
     }
 }
