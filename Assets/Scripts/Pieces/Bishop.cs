@@ -12,5 +12,8 @@ public class Bishop : Piece
         this.movement.Add(Vector2Int.left + Vector2Int.down);
 
         this.pieceType = PieceType.bishop;
+        this.attackPower = 25;
+        this.maxHitPoints = 25;
+        this.currHitPoints = 25;
     }
 }

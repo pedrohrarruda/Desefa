@@ -16,5 +16,8 @@ public class Queen : Piece
         this.movement.Add(Vector2Int.left); //left
 
         this.pieceType = PieceType.queen;
+        this.attackPower = 50;
+        this.maxHitPoints = 20;
+        this.currHitPoints = 20;
     }
 }

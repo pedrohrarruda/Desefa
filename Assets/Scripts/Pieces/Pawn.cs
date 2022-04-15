@@ -6,6 +6,9 @@ public class Pawn : Piece
 {
     public void Start(){
         this.pieceType = PieceType.pawn;
+        this.attackPower = 10;
+        this.maxHitPoints = 10;
+        this.currHitPoints = 10;
     }
     
     public override List<Vector2Int> GetAvailableMoves(ref Board board)

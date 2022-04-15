@@ -12,5 +12,8 @@ public class Rook : Piece
         this.movement.Add(Vector2Int.right);
 
         this.pieceType = PieceType.rook;
+        this.attackPower = 10;
+        this.maxHitPoints = 50;
+        this.currHitPoints = 50;
     }
 }

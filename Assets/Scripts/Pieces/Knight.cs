@@ -18,5 +18,8 @@ public class Knight : Piece
         this.moveOnce = true;
 
         this.pieceType = PieceType.knight;
+        this.attackPower = 25;
+        this.maxHitPoints = 10;
+        this.currHitPoints = 10;
     }
 }

@@ -5,6 +5,11 @@ public abstract class Piece : MonoBehaviour{
     protected bool moveOnce = false;
     protected bool firstMove = true;
 
+    protected int maxHitPoints;
+    protected int currHitPoints;
+
+    protected int attackPower;
+
     protected List<Vector2Int> movement = new List<Vector2Int>();
     private Vector2Int position = new Vector2Int();
     public GameManager.TurnPlayer team;
@@ -48,5 +53,23 @@ public abstract class Piece : MonoBehaviour{
 
     public GameManager.TurnPlayer GetTeam(){
         return this.team;
+    }
+
+    public void IsAttackedBy(Piece opponent){
+        this.currHitPoints = (this.currHitPoints - opponent.GetAP());
+    }
+
+    public bool IsAlive(){
+        if(this.currHitPoints <= 0){
+            return true;
+        }
+        else
+        return false;
+    } 
+    public int GetCurrHP(){
+        return this.currHitPoints;
+    }
+    public int GetAP(){
+        return this.attackPower;
     }
 }

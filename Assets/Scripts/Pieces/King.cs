@@ -17,5 +17,8 @@ public class King : Piece
 
         this.moveOnce = true;
         this.pieceType = PieceType.king;
+        this.attackPower = 100;
+        this.maxHitPoints = 1;
+        this.currHitPoints = 1;
     }
 }
