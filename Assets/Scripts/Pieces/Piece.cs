@@ -60,11 +60,7 @@ public abstract class Piece : MonoBehaviour{
     }
 
     public bool IsAlive(){
-        if(this.currHitPoints <= 0){
-            return true;
-        }
-        else
-        return false;
+        return this.currHitPoints>0;
     } 
     public int GetCurrHP(){
         return this.currHitPoints;
