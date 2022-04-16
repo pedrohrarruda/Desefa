@@ -8,7 +8,7 @@ public class CountdownTimer : MonoBehaviour
     private float startingTime;
     private bool isRunning;
     
-    public TextMeshProUGUI timer;
+    private TextMeshProUGUI timer;
 
     public void StartTimer(){
         isRunning = true;
@@ -16,6 +16,7 @@ public class CountdownTimer : MonoBehaviour
 
     public void StopTimer(){
         isRunning = false;
+        updateTimer();
     }
 
     private void updateTimer(){
@@ -23,7 +24,8 @@ public class CountdownTimer : MonoBehaviour
     }
 
     void Start() {
-        currentTime = startingTime = 60*60;
+        startingTime = 60;
+        currentTime = startingTime*60;
         isRunning = false;
         timer = gameObject.GetComponent<TextMeshProUGUI>();
         updateTimer();
@@ -33,5 +35,11 @@ public class CountdownTimer : MonoBehaviour
         if(!isRunning) return;
         currentTime -= 1*Time.deltaTime;
         updateTimer();
+
+        if(currentTime <= 0){
+            currentTime = 0;
+            StopTimer();
+            GameManager.Instance.TurnPlayerLose();
+        }
     }
 }
