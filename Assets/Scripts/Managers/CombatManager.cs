@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour{
-    /*private List<Piece> pieceRegistry;
+    private List<Piece> pieceRegistry;
     public CombatManager(){
         this.pieceRegistry = new List<Piece>();
     }
@@ -21,7 +21,7 @@ public class CombatManager : MonoBehaviour{
         var registry = this.pieceRegistry;
         this.pieceRegistry = registry.Where(keepPeace => keepPeace != OnePiece.Id).ToList<Piece>();
     }
-    */
+
     public int Time2Duel(Piece OnePiece, Piece TwoPiece){
         TwoPiece.IsAttackedBy(OnePiece);
         if(TwoPiece.IsAlive()){
@@ -35,6 +35,4 @@ public class CombatManager : MonoBehaviour{
         else
         return 1;
     }
-
-
 }
