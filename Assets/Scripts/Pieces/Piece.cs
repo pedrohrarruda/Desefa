@@ -17,7 +17,7 @@ public abstract class Piece : MonoBehaviour{
     protected enum PieceType {rook, bishop, king, queen, pawn, knight};
     protected PieceType pieceType;
 
-    public virtual List<Vector2Int> GetAvailableMoves(ref Board board){
+    public virtual List<Vector2Int> GetAvailableMoves(Board board){
         List<Vector2Int> moves = new List<Vector2Int>();
 
         for(int i = 0 ; i < movement.Count ; i++){
@@ -29,9 +29,8 @@ public abstract class Piece : MonoBehaviour{
                 
                 checkNextSquare = board.PieceCanOccupy(pos);
                 if(checkNextSquare){
-                    Piece piece = board.GetPiece(pos);
-                    if(piece == null || piece.GetTeam() != this.GetTeam()) moves.Add(pos);
-                    if(piece != null) checkNextSquare = false;
+                    moves.Add(pos);
+                    if(board.HasPiece(pos)) checkNextSquare = false;
                 }
                 
                 if(moveOnce) checkNextSquare = false;
@@ -44,7 +43,7 @@ public abstract class Piece : MonoBehaviour{
     public void MoveTo(Vector2Int new_position){
         firstMove = false;
         position = new_position;
-        this.transform.position = new Vector3(position.x, position.y);
+        this.transform.position = new Vector3(position.x - 0.5f, position.y - 0.5f);
     }
 
     public Vector2Int GetPosition(){

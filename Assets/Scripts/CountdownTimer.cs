@@ -16,10 +16,10 @@ public class CountdownTimer : MonoBehaviour
 
     public void StopTimer(){
         isRunning = false;
-        updateTimer();
+        UpdateTimer();
     }
 
-    private void updateTimer(){
+    private void UpdateTimer(){
         timer.text = TimeSpan.FromSeconds(currentTime).ToString(@"h\:mm\:ss");
     }
 
@@ -28,13 +28,13 @@ public class CountdownTimer : MonoBehaviour
         currentTime = startingTime*60;
         isRunning = false;
         timer = gameObject.GetComponent<TextMeshProUGUI>();
-        updateTimer();
+        UpdateTimer();
     }
 
     void Update(){
         if(!isRunning) return;
         currentTime -= 1*Time.deltaTime;
-        updateTimer();
+        UpdateTimer();
 
         if(currentTime <= 0){
             currentTime = 0;
