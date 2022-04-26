@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Board : MonoBehaviour
-{   
+{
+    [SerializeField]
     public TextAsset jsonMapa;
 
     private Tile[,] board;
@@ -10,37 +11,42 @@ public class Board : MonoBehaviour
     private int width;
 
     public GameObject white_rook, black_rook;
+    public GameObject highlightTile;
 
-    public GameObject selectedPiece;
-    
+    private GameObject selectedPiece;
+
+
     void Start()
     {
         this.height = JSONMapReader.GetMapHeight(jsonMapa);
         this.width = JSONMapReader.GetMapWidth(jsonMapa);
-        this.board = new Tile[this.width+1,this.height+1];
+        this.board = new Tile[this.width + 1, this.height + 1];
 
         int[,] terrain = JSONMapReader.GetMapMatrix(jsonMapa);
 
-        for(int x = 0; x <= this.width ; x++)
-            for(int y = 0; y <= this.height ; y++)
-                board[x,y] = new Tile(new Vector2Int(x,y), terrain[x, y]);
-        
+        for (int x = 0; x <= this.width; x++)
+            for (int y = 0; y <= this.height; y++)
+                board[x, y] = new Tile(new Vector2Int(x, y), terrain[x, y]);
+
         BoardSetup();
     }
 
-    private void BoardSetup(){
+    private void BoardSetup()
+    {
         //White setup
-        for(int i = (width - 6)/2 ; i <= (width + 8)/2 ; i++){
+        for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
+        {
             GameObject newPiece = Instantiate(white_rook, new Vector3(), Quaternion.identity);
             board[i, 2].SetPiece(newPiece);
             board[i, 2].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, 2));
         }
 
         //Black setup
-        for(int i = (width - 6)/2 ; i <= (width + 8)/2 ; i++){
+        for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
+        {
             GameObject newPiece = Instantiate(black_rook, new Vector3(), Quaternion.identity);
-            board[i, height-1].SetPiece(newPiece);
-            board[i, height-1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, height-1));
+            board[i, height - 1].SetPiece(newPiece);
+            board[i, height - 1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, height - 1));
         }
     }
 
@@ -48,34 +54,34 @@ public class Board : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0))
+        {
             Vector2Int mousePosition = MousePositionOnBoard();
-            /*
-            TODO
-            // movimentar as peças
-            // selecionar as peças
-            // deselecionar as peças
-            */
 
-            if(mousePosition.x > 0){
-                if(selectedPiece == null){
-                    selectedPiece = board[mousePosition.x, mousePosition.y].GetPiece();
-
-                    if(selectedPiece != null && selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer()){
-                        selectedPiece = null;
-                    }
-
-                    if(selectedPiece != null) AvailableMoves = selectedPiece.GetComponent<Piece>().GetAvailableMoves(this);
-                }else{
-                    if(IsInAvailableMoves(mousePosition)){
-                        if(board[mousePosition.x, mousePosition.y].HasPiece()){
+            if (mousePosition.x > 0)
+            {
+                if (selectedPiece == null)
+                {
+                    SelectPiece(mousePosition);
+                }
+                else
+                {
+                    if (IsInAvailableMoves(mousePosition))
+                    {
+                        if (board[mousePosition.x, mousePosition.y].HasPiece())
+                        {
                             GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
-                            if(selectedPiece.GetComponent<Piece>().GetTeam() == otherPiece.GetComponent<Piece>().GetTeam()){
+                            if (selectedPiece.GetComponent<Piece>().GetTeam() == otherPiece.GetComponent<Piece>().GetTeam())
+                            {
                                 Debug.Log("Ally");
-                            }else{
+                            }
+                            else
+                            {
                                 Debug.Log("Enemy");
                             }
-                        }else{
+                        }
+                        else
+                        {
                             Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
                             board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
                             board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(mousePosition.x, mousePosition.y));
@@ -86,13 +92,13 @@ public class Board : MonoBehaviour
                         GameManager.Instance.SwitchTurn();
                     }
 
-                    selectedPiece = null;
-                    AvailableMoves.Clear();
+                    UnselectPiece();
                 }
             }
-        }else if(Input.GetKeyDown(KeyCode.Escape)){
-            selectedPiece = null;
-            AvailableMoves.Clear();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnselectPiece();
         }
     }
 
@@ -105,8 +111,8 @@ public class Board : MonoBehaviour
         selectedTile.y = Mathf.CeilToInt(mousePosition.y);
 
         //Out of board position
-        if(selectedTile.x <= 0 || selectedTile.x > width) selectedTile = new Vector2Int(0, 0);
-        if(selectedTile.y <= 0 || selectedTile.y > height) selectedTile = new Vector2Int(0, 0);
+        if (selectedTile.x <= 0 || selectedTile.x > width) selectedTile = new Vector2Int(0, 0);
+        if (selectedTile.y <= 0 || selectedTile.y > height) selectedTile = new Vector2Int(0, 0);
 
         return selectedTile;
     }
@@ -123,14 +129,14 @@ public class Board : MonoBehaviour
 
     public bool PieceCanOccupy(Vector2Int position)
     {
-        if(ValidPos(position) && !IsObstacle(position)) return true;
+        if (ValidPos(position) && !IsObstacle(position)) return true;
         return false;
     }
 
     private bool ValidPos(Vector2Int position)
     {
-        if(position.x <= 0 || position.x > this.width) return false;
-        if(position.y <= 0 || position.y > this.height) return false;
+        if (position.x <= 0 || position.x > this.width) return false;
+        if (position.y <= 0 || position.y > this.height) return false;
         return true;
     }
 
@@ -139,8 +145,38 @@ public class Board : MonoBehaviour
         return board[vec.x, vec.y].IsObstacle();
     }
 
-    private bool IsInAvailableMoves(Vector2Int move){
+    private bool IsInAvailableMoves(Vector2Int move)
+    {
         return AvailableMoves.Contains(move);
     }
-}
 
+    //Highlite Tiles
+    private void SelectPiece(Vector2Int mousePosition)
+    {
+        selectedPiece = board[mousePosition.x, mousePosition.y].GetPiece();
+
+        if (selectedPiece != null && selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer())
+        {
+            selectedPiece = null;
+        }
+
+        AvailableMoves = selectedPiece.GetComponent<Piece>().GetAvailableMoves(this);
+
+        for (int i = 0; i < AvailableMoves.Count; i++)
+        {
+            GameObject highlight = Instantiate(highlightTile, new Vector3(AvailableMoves[i].x - 0.5f, AvailableMoves[i].y - 0.5f, 0), Quaternion.identity);
+            board[AvailableMoves[i].x, AvailableMoves[i].y].ActivateHighlight(highlight);
+        }
+    }
+
+    private void UnselectPiece()
+    {
+        for (int i = 0; i < AvailableMoves.Count; i++)
+        {
+            board[AvailableMoves[i].x, AvailableMoves[i].y].DeactivateHighlight();
+        }
+
+        AvailableMoves.Clear();
+        selectedPiece = null;
+    }
+}
