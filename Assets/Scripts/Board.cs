@@ -74,14 +74,15 @@ public class Board : MonoBehaviour
                             if (selectedPiece.GetComponent<Piece>().GetTeam() == otherPiece.GetComponent<Piece>().GetTeam())
                             {
                                 Debug.Log("Ally");
-                                if(PieceMergePotara(selectedPiece,otherPiece)){
+                                if(PieceMergePotara(selectedPiece.GetComponent<Piece>(),otherPiece.GetComponent<Piece>())){
+                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
                                     board[piecePosition.x, piecePosition.y].ClearPiece();
                                 }
                             }
                             else
                             {
                                 Debug.Log("Enemy");
-                                result = Time2Duel(selectedPiece,otherPiece);
+                                var result = Time2Duel(selectedPiece.GetComponent<Piece>(),otherPiece.GetComponent<Piece>());
                                 if(result == 0){
                                     Debug.Log("draw");
                                 }
@@ -92,8 +93,9 @@ public class Board : MonoBehaviour
 
                                     board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
                                 }
-                                else
-                                board[piecePosition.x, piecePosition.y].ClearPiece();
+                                else{
+                                Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                                board[piecePosition.x, piecePosition.y].ClearPiece();}
                             }
                         }
                         else
@@ -196,11 +198,11 @@ public class Board : MonoBehaviour
         selectedPiece = null;
     }
 
-    public int Time2Duel(Piece OnePiece, Piece TwoPiece){
-        TwoPiece.IsAttackedBy(OnePiece);
-        if(TwoPiece.IsAlive()){
-            OnePiece.IsAttackedBy(TwoPiece);
-            if(OnePiece.IsAlive()){
+    public int Time2Duel(Piece onePiece, Piece twoPiece){  // Função de inicio de combate
+        twoPiece.IsAttackedBy(onePiece);
+        if(twoPiece.IsAlive()){
+            onePiece.IsAttackedBy(twoPiece);
+            if(onePiece.IsAlive()){
                 return 0;
             }
             else
@@ -210,9 +212,9 @@ public class Board : MonoBehaviour
         return 1;
     }
 
-    public bool PieceMergePotara(Piece OnePiece, Piece TwoPiece){
-       if(OnePiece.GetPieceType() == TwoPiece.GetPieceType()){
-        TwoPiece.MergePiece(OnePiece.GetCurrHP());
+    public bool PieceMergePotara(Piece onePiece, Piece twoPiece){  //função para junção de peças
+       if(onePiece.GetPieceType() == twoPiece.GetPieceType()){
+        twoPiece.MergePiece(onePiece.GetCurrHP());
         return true;   
        }
        else
