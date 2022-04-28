@@ -71,18 +71,20 @@ public class Board : MonoBehaviour
                         if (board[mousePosition.x, mousePosition.y].HasPiece())
                         {
                             GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
-                            if (selectedPiece.GetComponent<Piece>().GetTeam() == otherPiece.GetComponent<Piece>().GetTeam())
+                            Piece selectedPiecePiece = selectedPiece.GetComponent<Piece>();
+                            Piece otherPiecePiece = otherPiece.GetComponent<Piece>();
+                            if (selectedPiecePiece.GetTeam() == otherPiecePiece.GetTeam())
                             {
                                 Debug.Log("Ally");
-                                if(PieceMergePotara(selectedPiece.GetComponent<Piece>(),otherPiece.GetComponent<Piece>())){
-                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                                if(PieceMergePotara(selectedPiece,otherPiece)){
+                                    Vector2Int piecePosition = selectedPiecePiece.GetPosition();
                                     board[piecePosition.x, piecePosition.y].ClearPiece();
                                 }
                             }
                             else
                             {
                                 Debug.Log("Enemy");
-                                var result = Time2Duel(selectedPiece.GetComponent<Piece>(),otherPiece.GetComponent<Piece>());
+                                var result = Time2Duel(selectedPiecePiece,otherPiecePiece);
                                 if(result == 0){
                                     Debug.Log("draw");
                                 }
@@ -203,18 +205,18 @@ public class Board : MonoBehaviour
         if(twoPiece.IsAlive()){
             onePiece.IsAttackedBy(twoPiece);
             if(onePiece.IsAlive()){
-                return 0;
+                return 1;
             }
             else
-            return 2;
+            return -1;
         }
         else
-        return 1;
+        return 0;
     }
 
-    public bool PieceMergePotara(Piece onePiece, Piece twoPiece){  //função para junção de peças
-       if(onePiece.GetPieceType() == twoPiece.GetPieceType()){
-        twoPiece.MergePiece(onePiece.GetCurrHP());
+    public bool PieceMergePotara(GameObject onePiece, GameObject twoPiece){  //função para junção de peças
+       if(onePiece.GetComponent<Piece>().GetPieceType() == twoPiece.GetComponent<Piece>().GetPieceType()){
+        twoPiece.GetComponent<Piece>().MergePiece(onePiece.GetComponent<Piece>().GetCurrHP());
         return true;   
        }
        else
