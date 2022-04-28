@@ -30,13 +30,18 @@ public class Tile : MonoBehaviour
     }
 
     public void SetPiece(GameObject newPiece)
-    {
+    {   
         this.piece = newPiece;
     }
 
     public void ClearPiece()
     {
-        piece = null;
+        this.piece = null;
+    }
+    public void DestroyPiece()
+    {    
+        Destroy(this.piece);
+        this.piece = null;
     }
 
     public bool IsObstacle()

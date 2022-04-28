@@ -4,10 +4,11 @@ using System.Collections.Generic;
 public abstract class Piece : MonoBehaviour{
     protected bool moveOnce = false;
     protected bool firstMove = true;
-
+    [SerializeField]
     protected int maxHitPoints;
+    [SerializeField]
     protected int currHitPoints;
-
+    [SerializeField]
     protected int attackPower;
 
     protected List<Vector2Int> movement = new List<Vector2Int>();

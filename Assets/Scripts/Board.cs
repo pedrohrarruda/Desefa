@@ -78,7 +78,7 @@ public class Board : MonoBehaviour
                                 Debug.Log("Ally");
                                 if(PieceMergePotara(selectedPiece,otherPiece)){
                                     Vector2Int piecePosition = selectedPieceScript.GetPosition();
-                                    board[piecePosition.x, piecePosition.y].ClearPiece();
+                                    board[piecePosition.x, piecePosition.y].DestroyPiece();
                                 }
                             }
                             else
@@ -90,21 +90,23 @@ public class Board : MonoBehaviour
                                 }
                                 else if(result == 1){
                                     Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                                    board[mousePosition.x, mousePosition.y].DestroyPiece();
                                     board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(mousePosition));
+                                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
+                                    board[piecePosition.x, piecePosition.y].ClearPiece();
 
-                                    board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
+                                     //TO DO: transformar esse bloco em uma função
                                 }
                                 else{
                                 Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                                board[piecePosition.x, piecePosition.y].ClearPiece();}
+                                board[piecePosition.x, piecePosition.y].DestroyPiece();}
                             }
                         }
                         else
                         {
                             Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
                             board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(mousePosition));
+                            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
 
                             board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
                         }
@@ -179,6 +181,8 @@ public class Board : MonoBehaviour
         {
             selectedPiece = null;
         }
+
+        if(selectedPiece == null) return;
 
         AvailableMoves = selectedPiece.GetComponent<Piece>().GetAvailableMoves(this);
 

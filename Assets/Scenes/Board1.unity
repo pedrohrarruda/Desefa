@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 861567714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b595a8321c83dc4fa4df159fbe2f208, type: 3}
+  m_Script: {fileID: 11500000, guid: ddd2ec07b37651947be7051e53983aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &861567716
@@ -214,7 +214,7 @@ MonoBehaviour:
   jsonMapa: {fileID: 4900000, guid: 116273f019036a14c8b4cddff9aae9dc, type: 3}
   white_rook: {fileID: 2509167432486279577, guid: 24d5188fd50e3f34a84cb7df51025bad, type: 3}
   black_rook: {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
-  selectedPiece: {fileID: 0}
+  highlightTile: {fileID: 1693103968094173422, guid: 1a0bc910db28d2a4395c9ac38e2a18ec, type: 3}
 --- !u!1 &1048171296
 GameObject:
   m_ObjectHideFlags: 0
