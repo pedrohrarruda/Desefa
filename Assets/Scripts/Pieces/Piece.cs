@@ -4,17 +4,18 @@ using System.Collections.Generic;
 public abstract class Piece : MonoBehaviour{
     protected bool moveOnce = false;
     protected bool firstMove = true;
-
+    [SerializeField]
     protected int maxHitPoints;
+    [SerializeField]
     protected int currHitPoints;
-
+    [SerializeField]
     protected int attackPower;
 
     protected List<Vector2Int> movement = new List<Vector2Int>();
     private Vector2Int position = new Vector2Int();
     public GameManager.TurnPlayer team;
 
-    protected enum PieceType {rook, bishop, king, queen, pawn, knight};
+    public enum PieceType {rook, bishop, king, queen, pawn, knight};
     protected PieceType pieceType;
 
     public virtual List<Vector2Int> GetAvailableMoves(Board board){
@@ -66,5 +67,15 @@ public abstract class Piece : MonoBehaviour{
     }
     public int GetAP(){
         return this.attackPower;
+    }
+
+    public void MergePiece(int pieceHP){
+        this.currHitPoints = currHitPoints + pieceHP;
+        this.maxHitPoints += maxHitPoints;
+        this.attackPower = (attackPower*3)/2;
+    }
+
+    public PieceType GetPieceType(){
+        return this.pieceType;
     }
 }
