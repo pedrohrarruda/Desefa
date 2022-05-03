@@ -30,8 +30,14 @@ public abstract class Piece : MonoBehaviour{
                 
                 checkNextSquare = board.PieceCanOccupy(pos);
                 if(checkNextSquare){
-                    moves.Add(pos);
-                    if(board.HasPiece(pos)) checkNextSquare = false;
+                    if(board.HasPiece(pos)){
+                        checkNextSquare = false;
+                        if(!(board.GetPiece(pos).GetComponent<Piece>().GetTeam() == team && board.GetPiece(pos).GetComponent<Piece>().GetPieceType() != pieceType)){
+                            moves.Add(pos);
+                        }
+                    }else{
+                        moves.Add(pos);
+                    }
                 }
                 
                 if(moveOnce) checkNextSquare = false;
