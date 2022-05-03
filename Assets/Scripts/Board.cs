@@ -78,8 +78,6 @@ public class Board : MonoBehaviour
                 if (selectedPiece == null){
                     SelectPiece(mousePosition);
                 }else{
-                    bool hasDeath = false;
-
                     if (IsInAvailableMoves(mousePosition)){
                         SoundManager.instance.Stop();
                         
@@ -104,13 +102,11 @@ public class Board : MonoBehaviour
                                     board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
                                     board[piecePosition.x, piecePosition.y].ClearPiece();
                                     
-                                    hasDeath = true;
                                     SoundManager.instance.PlayDeath();
                                 }else if(result == -1){
                                     Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
                                     board[piecePosition.x, piecePosition.y].DestroyPiece();
 
-                                    hasDeath = true;
                                     SoundManager.instance.PlayDeath();
                                 }
                             }
@@ -124,9 +120,10 @@ public class Board : MonoBehaviour
 
                         if(Endgame.FinishGame(board, height, width)) return;
                         GameManager.Instance.SwitchTurn();
+                    }else{
+                        SoundManager.instance.Stop();
                     }
-
-                    if(!hasDeath) SoundManager.instance.Stop();
+                    
                     UnselectPiece();
                 }
             }
