@@ -396,8 +396,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonMapa: {fileID: 4900000, guid: 116273f019036a14c8b4cddff9aae9dc, type: 3}
-  white_rook: {fileID: 2509167432486279577, guid: 24d5188fd50e3f34a84cb7df51025bad, type: 3}
-  black_rook: {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
+  whitePawn: {fileID: 2509167432486279577, guid: 24d5188fd50e3f34a84cb7df51025bad, type: 3}
+  whiteKing: {fileID: 1314921021315500723, guid: efe6c07bf5734f149b6d68a9af66887a, type: 3}
+  blackRook: {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
   highlightTile: {fileID: 1693103968094173422, guid: 1a0bc910db28d2a4395c9ac38e2a18ec, type: 3}
   healthUI: {fileID: 0}
   attackUI: {fileID: 0}

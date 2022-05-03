@@ -10,7 +10,7 @@ public class Board : MonoBehaviour
     private int height;
     private int width;
 
-    public GameObject white_rook, black_rook;
+    public GameObject whitePawn, whiteKing, blackRook;
 
     private GameObject selectedPiece;
 
@@ -38,7 +38,7 @@ public class Board : MonoBehaviour
         //White setup
         for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
         {
-            GameObject newPiece = Instantiate(white_rook, new Vector3(), Quaternion.identity);
+            GameObject newPiece = Instantiate(whiteKing, new Vector3(), Quaternion.identity);
             board[i, 2].SetPiece(newPiece);
             board[i, 2].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, 2));
         }
@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
         //Black setup
         for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
         {
-            GameObject newPiece = Instantiate(black_rook, new Vector3(), Quaternion.identity);
+            GameObject newPiece = Instantiate(blackRook, new Vector3(), Quaternion.identity);
             board[i, height - 1].SetPiece(newPiece);
             board[i, height - 1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, height - 1));
         }
@@ -81,6 +81,7 @@ public class Board : MonoBehaviour
                                 var result = Time2Duel(selectedPieceScript,otherPieceScript);
                                 if(result == 1){
                                     Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+
                                     board[mousePosition.x, mousePosition.y].DestroyPiece();
                                     board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
                                     board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
@@ -102,6 +103,7 @@ public class Board : MonoBehaviour
                             board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
                         }
 
+                        if(Endgame.FinishGame(board, height, width)) return;
                         GameManager.Instance.SwitchTurn();
                     }
 
