@@ -173,12 +173,13 @@ public class Board : MonoBehaviour
     //Highligth Tiles
     private void SelectPiece(Vector2Int mousePosition)
     {
+        GameManager.TurnPlayer turnPlayer = GameManager.Instance.GetTurnPlayer();
+        if ((turnPlayer == GameManager.TurnPlayer.white && currentTeam != 0) || (turnPlayer == GameManager.TurnPlayer.black && currentTeam != 1))
+            return;
+
         selectedPiece = board[mousePosition.x, mousePosition.y].GetPiece();
 
-        if (selectedPiece != null && (selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer())){
-            //GameManager.TurnPlayer turn = GameManager.Instance.GetTurnPlayer();
-            //Debug.Log(currentTeam);
-            //if((turn == GameManager.TurnPlayer.white && currentTeam == 0) || (turn == GameManager.TurnPlayer.black && currentTeam == 1))
+        if (selectedPiece != null && (selectedPiece.GetComponent<Piece>().GetTeam() != turnPlayer)){
                 selectedPiece = null;
         }
 
@@ -262,8 +263,6 @@ public class Board : MonoBehaviour
         NetWelcome nw = msg as NetWelcome;
 
         currentTeam = nw.AssignedTeam;
-
-
     }
 
     private void OnStartGameClient(NetMessage obj)
