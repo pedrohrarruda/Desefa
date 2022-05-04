@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Networking.Transport;
+using System;
 
 public class Board : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class Board : MonoBehaviour
     public GameObject highlightTile;
     public GameObject healthUI, attackUI;
 
+    private int playerCount = -1;
+    private int currentTeam = -1;
+
     void Start()
     {
         this.height = JSONMapReader.GetMapHeight(jsonMapa);
@@ -31,6 +36,9 @@ public class Board : MonoBehaviour
                 board[x, y] = new Tile(new Vector2Int(x, y), terrain[x, y]);
 
         BoardSetup();
+
+        RegisterEvents();
+        
     }
 
     private void BoardSetup()
@@ -162,13 +170,16 @@ public class Board : MonoBehaviour
         return AvailableMoves.Contains(move);
     }
 
-    //Highlite Tiles
+    //Highligth Tiles
     private void SelectPiece(Vector2Int mousePosition)
     {
         selectedPiece = board[mousePosition.x, mousePosition.y].GetPiece();
 
-        if (selectedPiece != null && selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer()){
-            selectedPiece = null;
+        if (selectedPiece != null && (selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer())){
+            //GameManager.TurnPlayer turn = GameManager.Instance.GetTurnPlayer();
+            //Debug.Log(currentTeam);
+            //if((turn == GameManager.TurnPlayer.white && currentTeam == 0) || (turn == GameManager.TurnPlayer.black && currentTeam == 1))
+                selectedPiece = null;
         }
 
         if(selectedPiece == null) return;
@@ -216,4 +227,48 @@ public class Board : MonoBehaviour
         }
         return false;
     }
+
+    private void RegisterEvents()
+    {
+        NetUtility.S_WELCOME += OnWelcomeServer;
+
+        NetUtility.C_WELCOME += OnWelcomeClient;
+
+        NetUtility.C_START_GAME += OnStartGameClient;
+    }
+
+    private void UnregisterEvents()
+    {
+
+    }
+
+    private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
+    {
+        NetWelcome nw = msg as NetWelcome;
+
+        nw.AssignedTeam = ++playerCount;
+
+        Server.Instance.SendToClient(cnn, nw);
+
+        if(playerCount == 1)
+        {
+            Server.Instance.Broadcast(new NetStartGame());
+        }
+
+    }
+
+    private void OnWelcomeClient(NetMessage msg)
+    {
+        NetWelcome nw = msg as NetWelcome;
+
+        currentTeam = nw.AssignedTeam;
+
+
+    }
+
+    private void OnStartGameClient(NetMessage obj)
+    {
+        //wait
+    }
+
 }

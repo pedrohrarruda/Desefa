@@ -78,12 +78,12 @@ public class Client : MonoBehaviour
         {
             if (cmd == NetworkEvent.Type.Connect)
             {
-                //SendToServer(new NetWelcome());
+                SendToServer(new NetWelcome());
                 Debug.Log("connection estabilished");
             }
             else if (cmd == NetworkEvent.Type.Data)
             {
-                //NetUtility.OnData(stream, default(NetworkConnection));
+                NetUtility.OnData(stream, default(NetworkConnection));
             }
             else if (cmd == NetworkEvent.Type.Disconnect)
             {

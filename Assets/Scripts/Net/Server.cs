@@ -108,7 +108,7 @@ public class Server : MonoBehaviour
             {
                 if(cmd == NetworkEvent.Type.Data)
                 {
-                    //NetUtility.OnData(stream, connections[i], this);
+                    NetUtility.OnData(stream, connections[i], this);
                 }
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
@@ -121,7 +121,7 @@ public class Server : MonoBehaviour
         }
     }
 
-    private void SendToClient(NetworkConnection connection, NetMessage msg)
+    public void SendToClient(NetworkConnection connection, NetMessage msg)
     {
         DataStreamWriter writer;
         driver.BeginSend(connection, out writer);
@@ -129,7 +129,7 @@ public class Server : MonoBehaviour
         driver.EndSend(writer);
     }
 
-    private void Broadcast(NetMessage msg)
+    public void Broadcast(NetMessage msg)
     {
         for (int i = 0;i < connections.Length; i++)
         {
