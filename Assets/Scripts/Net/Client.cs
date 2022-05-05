@@ -95,8 +95,9 @@ public class Client : MonoBehaviour
         }
     }
 
-    private void SendToServer(NetMessage msg)
+    public void SendToServer(NetMessage msg)
     {
+        Debug.Log($"Send to server : {msg.Code}");
         DataStreamWriter writer;
         driver.BeginSend(connection, out writer);
         msg.Serialize(ref writer);

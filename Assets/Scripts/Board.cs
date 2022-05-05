@@ -73,42 +73,18 @@ public class Board : MonoBehaviour
                 }else{
                     if (IsInAvailableMoves(mousePosition)){
                         SoundManager.instance.Stop();
+
+                        Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
                         
-                        if (board[mousePosition.x, mousePosition.y].HasPiece()){
-                            GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
+                        MoveTo(mousePosition);
 
-                            Piece selectedPieceScript = selectedPiece.GetComponent<Piece>();
-                            Piece otherPieceScript = otherPiece.GetComponent<Piece>();
-
-                            if (selectedPieceScript.GetTeam() == otherPieceScript.GetTeam()){
-                                if(PieceMergePotara(selectedPiece,otherPiece)){
-                                    Vector2Int piecePosition = selectedPieceScript.GetPosition();
-                                    board[piecePosition.x, piecePosition.y].DestroyPiece();
-                                }
-                            }else{
-                                var result = Time2Duel(selectedPieceScript,otherPieceScript);
-                                if(result == 1){
-                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                                    board[mousePosition.x, mousePosition.y].DestroyPiece();
-                                    board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
-                                    board[piecePosition.x, piecePosition.y].ClearPiece();
-                                    
-                                    SoundManager.instance.PlayDeath();
-                                }else if(result == -1){
-                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                                    board[piecePosition.x, piecePosition.y].DestroyPiece();
-
-                                    SoundManager.instance.PlayDeath();
-                                }
-                            }
-                        }else{
-                            Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                            board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
-
-                            board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
-                        }
+                        NetMakeMove makeMove = new NetMakeMove();
+                        makeMove.initialX = piecePosition.x;
+                        makeMove.initialY = piecePosition.y;
+                        makeMove.destinationX = mousePosition.x;
+                        makeMove.destinationY = mousePosition.y;
+                        makeMove.turnPlayer = currentTeam;
+                        Client.Instance.SendToServer(makeMove);
 
                         GameManager.Instance.SwitchTurn();
                     }
@@ -119,6 +95,44 @@ public class Board : MonoBehaviour
         }else if (Input.GetKeyDown(KeyCode.Escape)){
             UnselectPiece();
             SoundManager.instance.Stop();
+        }
+    }
+
+    private void MoveTo(Vector2Int mousePosition){
+         if (board[mousePosition.x, mousePosition.y].HasPiece()){
+            GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
+
+            Piece selectedPieceScript = selectedPiece.GetComponent<Piece>();
+            Piece otherPieceScript = otherPiece.GetComponent<Piece>();
+
+            if (selectedPieceScript.GetTeam() == otherPieceScript.GetTeam()){
+                if(PieceMergePotara(selectedPiece,otherPiece)){
+                    Vector2Int piecePosition = selectedPieceScript.GetPosition();
+                    board[piecePosition.x, piecePosition.y].DestroyPiece();
+                }
+            }else{
+                var result = Time2Duel(selectedPieceScript,otherPieceScript);
+                if(result == 1){
+                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                    board[mousePosition.x, mousePosition.y].DestroyPiece();
+                    board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
+                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
+                    board[piecePosition.x, piecePosition.y].ClearPiece();
+                    
+                    SoundManager.instance.PlayDeath();
+                }else if(result == -1){
+                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                    board[piecePosition.x, piecePosition.y].DestroyPiece();
+
+                    SoundManager.instance.PlayDeath();
+                }
+            }
+        }else{
+            Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+            board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
+            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
+
+            board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
         }
     }
 
@@ -232,8 +246,10 @@ public class Board : MonoBehaviour
     private void RegisterEvents()
     {
         NetUtility.S_WELCOME += OnWelcomeServer;
+        NetUtility.S_MAKE_MOVE += OnMakeMoveServer;
 
         NetUtility.C_WELCOME += OnWelcomeClient;
+        NetUtility.C_MAKE_MOVE += OnMakeMoveClient;
 
         NetUtility.C_START_GAME += OnStartGameClient;
     }
@@ -270,4 +286,19 @@ public class Board : MonoBehaviour
         //wait
     }
 
+    private void OnMakeMoveServer(NetMessage msg, NetworkConnection cnn){
+        NetMakeMove mm = msg as NetMakeMove;
+
+        Server.Instance.Broadcast(mm);
+    }
+    
+    private void OnMakeMoveClient(NetMessage msg){
+        NetMakeMove move = msg as NetMakeMove;
+        
+        if(move.turnPlayer != currentTeam){
+            selectedPiece = board[move.initialX, move.initialY].GetPiece();
+            MoveTo(new Vector2Int(move.destinationX, move.destinationY));
+            GameManager.Instance.SwitchTurn();
+        }
+    }  
 }
