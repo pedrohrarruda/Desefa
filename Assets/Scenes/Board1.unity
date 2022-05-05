@@ -1669,11 +1669,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonMapa: {fileID: 4900000, guid: 116273f019036a14c8b4cddff9aae9dc, type: 3}
-  white_rook: {fileID: 2509167432486279577, guid: 24d5188fd50e3f34a84cb7df51025bad, type: 3}
-  black_rook: {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
+  whitePieces:
+  - {fileID: 4376284604145356207, guid: 6de56ea3f50a3ae47b17dd8bdd9dde72, type: 3}
+  - {fileID: 2643396501935658360, guid: 627faa4925eace647a9527008f31f87f, type: 3}
+  - {fileID: 3971680101926390219, guid: 013061ab45475074e94c46fac8f67292, type: 3}
+  - {fileID: 8062156917330055433, guid: ab98e1d4aa18203498362b4cba19a4ee, type: 3}
+  - {fileID: 1314921021315500723, guid: efe6c07bf5734f149b6d68a9af66887a, type: 3}
+  - {fileID: 3971680101926390219, guid: 013061ab45475074e94c46fac8f67292, type: 3}
+  - {fileID: 2643396501935658360, guid: 627faa4925eace647a9527008f31f87f, type: 3}
+  - {fileID: 4376284604145356207, guid: 6de56ea3f50a3ae47b17dd8bdd9dde72, type: 3}
+  - {fileID: 2509167432486279577, guid: 24d5188fd50e3f34a84cb7df51025bad, type: 3}
+  blackPieces:
+  - {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
+  - {fileID: 8185551956912837814, guid: a057725c411277b4aa3b299e78376697, type: 3}
+  - {fileID: 4376977870967538906, guid: 60349a57446a5074d93f4368a6b89cd6, type: 3}
+  - {fileID: 7982461511096314301, guid: e0af569ee9d42ca4dba7fc592d28d2c6, type: 3}
+  - {fileID: 3337357348614047074, guid: 53c0f4914bc63d14aa6eae15ee46158e, type: 3}
+  - {fileID: 4376977870967538906, guid: 60349a57446a5074d93f4368a6b89cd6, type: 3}
+  - {fileID: 8185551956912837814, guid: a057725c411277b4aa3b299e78376697, type: 3}
+  - {fileID: 6011446869134770356, guid: cc51fa6c3aed6594f9bc30af51d022e1, type: 3}
+  - {fileID: 4727409194353185903, guid: b6cc4969b6b5819499b80ad4db708d75, type: 3}
   highlightTile: {fileID: 1693103968094173422, guid: 1a0bc910db28d2a4395c9ac38e2a18ec, type: 3}
-  healthUI: {fileID: 0}
-  attackUI: {fileID: 0}
 --- !u!1 &1048171296
 GameObject:
   m_ObjectHideFlags: 0

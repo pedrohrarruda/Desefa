@@ -12,13 +12,16 @@ public class Board : MonoBehaviour
     private int height;
     private int width;
 
-    public GameObject white_rook, black_rook;
+    [SerializeField]
+    private GameObject[] whitePieces;
+    [SerializeField]
+    private GameObject[] blackPieces;
 
     private GameObject selectedPiece;
 
     //TILE prefabs
-    public GameObject highlightTile;
-    public GameObject healthUI, attackUI;
+    [SerializeField]
+    private GameObject highlightTile;
 
     private int playerCount = -1;
     private int currentTeam = -1;
@@ -44,19 +47,31 @@ public class Board : MonoBehaviour
     private void BoardSetup()
     {
         //White setup
-        for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
-        {
-            GameObject newPiece = Instantiate(white_rook, new Vector3(), Quaternion.identity);
-            board[i, 2].SetPiece(newPiece);
-            board[i, 2].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, 2));
+        for(int i = 0 ; i < 8 ; i++){
+            GameObject whitePiece;
+            int x = i + (width-6)/2;
+
+            whitePiece = Instantiate(whitePieces[i], new Vector3(), Quaternion.identity);
+            board[x, 1].SetPiece(whitePiece);
+            board[x, 1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(x, 1));
+
+            whitePiece = Instantiate(whitePieces[8], new Vector3(), Quaternion.identity);
+            board[x, 2].SetPiece(whitePiece);
+            board[x, 2].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(x, 2));
         }
 
         //Black setup
-        for (int i = (width - 6) / 2; i <= (width + 8) / 2; i++)
-        {
-            GameObject newPiece = Instantiate(black_rook, new Vector3(), Quaternion.identity);
-            board[i, height - 1].SetPiece(newPiece);
-            board[i, height - 1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(i, height - 1));
+        for(int i = 0 ; i < 8 ; i++){
+            GameObject blackPiece;
+            int x = i + (width-6)/2;
+
+            blackPiece = Instantiate(blackPieces[i], new Vector3(), Quaternion.identity);
+            board[x, height].SetPiece(blackPiece);
+            board[x, height].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(x, height));
+
+            blackPiece = Instantiate(blackPieces[8], new Vector3(), Quaternion.identity);
+            board[x, height-1].SetPiece(blackPiece);
+            board[x, height-1].GetPiece().GetComponent<Piece>().MoveTo(new Vector2Int(x, height-1));
         }
     }
 
@@ -75,7 +90,7 @@ public class Board : MonoBehaviour
                         SoundManager.instance.Stop();
 
                         Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                        
+
                         MoveTo(mousePosition);
 
                         NetMakeMove makeMove = new NetMakeMove();
@@ -86,9 +101,12 @@ public class Board : MonoBehaviour
                         makeMove.turnPlayer = currentTeam;
                         Client.Instance.SendToServer(makeMove);
 
+                        if(Endgame.FinishGame(board, height, width)) return;
                         GameManager.Instance.SwitchTurn();
+                    }else{
+                        SoundManager.instance.Stop();
                     }
-
+                    
                     UnselectPiece();
                 }
             }
