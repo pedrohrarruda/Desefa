@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Networking.Transport;
+using System;
 
 public class Board : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject highlightTile;
 
+    private int playerCount = -1;
+    private int currentTeam = -1;
+
     void Start()
     {
         this.height = JSONMapReader.GetMapHeight(jsonMapa);
@@ -34,6 +39,9 @@ public class Board : MonoBehaviour
                 board[x, y] = new Tile(new Vector2Int(x, y), terrain[x, y]);
 
         BoardSetup();
+
+        RegisterEvents();
+        
     }
 
     private void BoardSetup()
@@ -80,43 +88,18 @@ public class Board : MonoBehaviour
                 }else{
                     if (IsInAvailableMoves(mousePosition)){
                         SoundManager.instance.Stop();
-                        
-                        if (board[mousePosition.x, mousePosition.y].HasPiece()){
-                            GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
 
-                            Piece selectedPieceScript = selectedPiece.GetComponent<Piece>();
-                            Piece otherPieceScript = otherPiece.GetComponent<Piece>();
+                        Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
 
-                            if (selectedPieceScript.GetTeam() == otherPieceScript.GetTeam()){
-                                if(PieceMergePotara(selectedPiece,otherPiece)){
-                                    Vector2Int piecePosition = selectedPieceScript.GetPosition();
-                                    board[piecePosition.x, piecePosition.y].DestroyPiece();
-                                }
-                            }else{
-                                var result = Time2Duel(selectedPieceScript,otherPieceScript);
-                                if(result == 1){
-                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                        MoveTo(mousePosition);
 
-                                    board[mousePosition.x, mousePosition.y].DestroyPiece();
-                                    board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
-                                    board[piecePosition.x, piecePosition.y].ClearPiece();
-                                    
-                                    SoundManager.instance.PlayDeath();
-                                }else if(result == -1){
-                                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                                    board[piecePosition.x, piecePosition.y].DestroyPiece();
-
-                                    SoundManager.instance.PlayDeath();
-                                }
-                            }
-                        }else{
-                            Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
-                            board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
-                            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
-
-                            board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
-                        }
+                        NetMakeMove makeMove = new NetMakeMove();
+                        makeMove.initialX = piecePosition.x;
+                        makeMove.initialY = piecePosition.y;
+                        makeMove.destinationX = mousePosition.x;
+                        makeMove.destinationY = mousePosition.y;
+                        makeMove.turnPlayer = currentTeam;
+                        Client.Instance.SendToServer(makeMove);
 
                         if(Endgame.FinishGame(board, height, width)) return;
                         GameManager.Instance.SwitchTurn();
@@ -130,6 +113,44 @@ public class Board : MonoBehaviour
         }else if (Input.GetKeyDown(KeyCode.Escape)){
             UnselectPiece();
             SoundManager.instance.Stop();
+        }
+    }
+
+    private void MoveTo(Vector2Int mousePosition){
+         if (board[mousePosition.x, mousePosition.y].HasPiece()){
+            GameObject otherPiece = board[mousePosition.x, mousePosition.y].GetPiece();
+
+            Piece selectedPieceScript = selectedPiece.GetComponent<Piece>();
+            Piece otherPieceScript = otherPiece.GetComponent<Piece>();
+
+            if (selectedPieceScript.GetTeam() == otherPieceScript.GetTeam()){
+                if(PieceMergePotara(selectedPiece,otherPiece)){
+                    Vector2Int piecePosition = selectedPieceScript.GetPosition();
+                    board[piecePosition.x, piecePosition.y].DestroyPiece();
+                }
+            }else{
+                var result = Time2Duel(selectedPieceScript,otherPieceScript);
+                if(result == 1){
+                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                    board[mousePosition.x, mousePosition.y].DestroyPiece();
+                    board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
+                    board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
+                    board[piecePosition.x, piecePosition.y].ClearPiece();
+                    
+                    SoundManager.instance.PlayDeath();
+                }else if(result == -1){
+                    Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+                    board[piecePosition.x, piecePosition.y].DestroyPiece();
+
+                    SoundManager.instance.PlayDeath();
+                }
+            }
+        }else{
+            Vector2Int piecePosition = selectedPiece.GetComponent<Piece>().GetPosition();
+            board[mousePosition.x, mousePosition.y].SetPiece(board[piecePosition.x, piecePosition.y].GetPiece());
+            board[mousePosition.x, mousePosition.y].GetPiece().GetComponent<Piece>().MoveTo(mousePosition);
+
+            board[piecePosition.x, piecePosition.y].ClearPiece(); //TO DO: transformar esse bloco em uma função
         }
     }
 
@@ -181,13 +202,17 @@ public class Board : MonoBehaviour
         return AvailableMoves.Contains(move);
     }
 
-    //Highlite Tiles
+    //Highligth Tiles
     private void SelectPiece(Vector2Int mousePosition)
     {
+        GameManager.TurnPlayer turnPlayer = GameManager.Instance.GetTurnPlayer();
+        if ((turnPlayer == GameManager.TurnPlayer.white && currentTeam != 0) || (turnPlayer == GameManager.TurnPlayer.black && currentTeam != 1))
+            return;
+
         selectedPiece = board[mousePosition.x, mousePosition.y].GetPiece();
 
-        if (selectedPiece != null && selectedPiece.GetComponent<Piece>().GetTeam() != GameManager.Instance.GetTurnPlayer()){
-            selectedPiece = null;
+        if (selectedPiece != null && (selectedPiece.GetComponent<Piece>().GetTeam() != turnPlayer)){
+                selectedPiece = null;
         }
 
         if(selectedPiece == null) return;
@@ -235,4 +260,63 @@ public class Board : MonoBehaviour
         }
         return false;
     }
+
+    private void RegisterEvents()
+    {
+        NetUtility.S_WELCOME += OnWelcomeServer;
+        NetUtility.S_MAKE_MOVE += OnMakeMoveServer;
+
+        NetUtility.C_WELCOME += OnWelcomeClient;
+        NetUtility.C_MAKE_MOVE += OnMakeMoveClient;
+
+        NetUtility.C_START_GAME += OnStartGameClient;
+    }
+
+    private void UnregisterEvents()
+    {
+
+    }
+
+    private void OnWelcomeServer(NetMessage msg, NetworkConnection cnn)
+    {
+        NetWelcome nw = msg as NetWelcome;
+
+        nw.AssignedTeam = ++playerCount;
+
+        Server.Instance.SendToClient(cnn, nw);
+
+        if(playerCount == 1)
+        {
+            Server.Instance.Broadcast(new NetStartGame());
+        }
+
+    }
+
+    private void OnWelcomeClient(NetMessage msg)
+    {
+        NetWelcome nw = msg as NetWelcome;
+
+        currentTeam = nw.AssignedTeam;
+    }
+
+    private void OnStartGameClient(NetMessage obj)
+    {
+        //wait
+    }
+
+    private void OnMakeMoveServer(NetMessage msg, NetworkConnection cnn){
+        NetMakeMove mm = msg as NetMakeMove;
+
+        Server.Instance.Broadcast(mm);
+    }
+    
+    private void OnMakeMoveClient(NetMessage msg){
+        NetMakeMove move = msg as NetMakeMove;
+        
+        if(move.turnPlayer != currentTeam){
+            selectedPiece = board[move.initialX, move.initialY].GetPiece();
+            MoveTo(new Vector2Int(move.destinationX, move.destinationY));
+            GameManager.Instance.SwitchTurn();
+        }
+    }  
 }
